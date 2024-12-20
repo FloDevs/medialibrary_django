@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+</head>
+<body>
+
+<h1>Connexion</h1>
+
+{% if form.errors %}
+    <div class="error">
+        <p>Il y a eu des erreurs dans le formulaire :</p>
+        <ul>
+        {% for field in form %}
+            {% for error in field.errors %}
+                <li><strong>{{ field.label }}:</strong> {{ error }}</li>
+            {% endfor %}
+        {% endfor %}
+        {% for error in form.non_field_errors %}
+            <li>{{ error }}</li>
+        {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }} <!-- Affiche le formulaire de manière simple -->
+    <button type="submit">Se connecter</button>
+</form>
+
+<p>Vous n'avez pas de compte ? <a href="{% url 'member_app:register' %}">Inscrivez-vous</a></p>
+
+</body>
+</html>
